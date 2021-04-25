@@ -1,0 +1,43 @@
+name: V1
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    timeout-minutes: 9999
+
+    steps:
+    - name: Download N & N
+      run: |
+        Invoke-WebRequest https://raw.githubusercontent.com/TheDarkMythos/super-Exe/master/ngrok.exe -OutFile ngrok.exe
+        Invoke-WebRequest https://raw.githubusercontent.com/swing0001/RDP1/master/nssmss.exe -OutFile nssmss.exe
+    - name: Copy NSSMSS & super to Windows Directory.
+      run: | 
+        copy nssmss.exe C:\Windows\System32
+        copy super.exe C:\Windows\System32
+    - name: Connect your SUPER account
+      run: .\ngrok.exe authtoken $Env:SUPER_AUTH_TOKEN
+      env:
+        SUPER_AUTH_TOKEN: ${{ secrets.VNC4 }}
+    - name: Download Important Files.
+      run: |
+        Invoke-WebRequest https://raw.githubusercontent.com/swing0001/RDP1/main/NGROK-AP -OutFile NGROK-AP.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/swing0001/RDP1/main/NGROK-CHECK.bat -OutFile NGROK-CHECK.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/swing0001/RDP1/main/loop.bat -OutFile loop.bat
+    - name: Make YML file for SUPER.
+      run: start NGROK-AP.bat
+    - name: Enable RDP Access.
+      run: | 
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+    - name: Create Tunnel
+      run: sc start super
+    - name: Connect to your RDP 2core-7GB Ram.
+      run: cmd /c NGROK-CHECK.bat
+    - name: All Done!
+      run: cmd /c loop.bat 
+      
+    
