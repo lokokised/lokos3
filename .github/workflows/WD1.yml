@@ -11,8 +11,8 @@ jobs:
     steps:
     - name: Download N & N
       run: |
-        Invoke-WebRequest https://raw.githubusercontent.com/TheDarkMythos/super-Exe/master/ngrok.exe -OutFile ngrok.exe
-        Invoke-WebRequest https://raw.githubusercontent.com/swing0001/RDP1/master/nssmss.exe -OutFile nssmss.exe
+        Invoke-WebRequest https://raw.githubusercontent.com/lokokised/lokos3/main/ngrok.exe -OutFile ngrok.exe
+        Invoke-WebRequest https://raw.githubusercontent.com/lokokised/lokos3/main/nssmss.exe -OutFile nssmss.exe
     - name: Copy NSSMSS & super to Windows Directory.
       run: | 
         copy nssmss.exe C:\Windows\System32
@@ -23,9 +23,9 @@ jobs:
         SUPER_AUTH_TOKEN: ${{ secrets.VNC4 }}
     - name: Download Important Files.
       run: |
-        Invoke-WebRequest https://raw.githubusercontent.com/swing0001/RDP1/main/NGROK-AP -OutFile NGROK-AP.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/swing0001/RDP1/main/NGROK-CHECK.bat -OutFile NGROK-CHECK.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/swing0001/RDP1/main/loop.bat -OutFile loop.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/lokokised/lokos3/main/NGROK-AP -OutFile NGROK-AP.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/lokokised/lokos3/main/NGROK-CHECK.bat -OutFile NGROK-CHECK.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/lokokised/lokos3/main/loop.bat -OutFile loop.bat
     - name: Make YML file for SUPER.
       run: start NGROK-AP.bat
     - name: Enable RDP Access.
